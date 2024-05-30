@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stlye/kabinet.css">
+  <link rel="stylesheet" href="stlye/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <script src="http://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+  <script src="http://wow.techbrood.com/libs/angular/angular.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <div class="container">
+      <div class="navbar">
+        <a class="logo" href="">
+          <p class="logo__text">AKAD BANK</p>
+        </a>
+        <ul class="navbar__list">
+
+          <li><a class="link" href="index.html"> <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="15"
+                height="13" viewBox="0 0 20 20" id="profile">
+                <g fill="none" fill-rule="evenodd">
+                  <g fill="#fff" transform="translate(-140 -2159)">
+                    <g transform="translate(56 160)">
+                      <path
+                        d="M100.563 2017H87.438c-.706 0-1.228-.697-.961-1.338 
+                  1.236-2.964 4.14-4.662 7.523-4.662 3.384 0 6.288 1.698 7.524 4.662.267.641-.255 1.338-.961 1.338m-10.646-12c0-2.206 1.832-4 4.083-4 2.252 0 4.083 1.794 4.083 
+                  4s-1.831 4-4.083 4c-2.251 0-4.083-1.794-4.083-4m14.039 11.636c-.742-3.359-3.064-5.838-6.119-6.963 1.619-1.277 2.563-3.342 2.216-5.603-.402-2.623-2.63-4.722-5.318-5.028-3.712-.423-6.86
+                   2.407-6.86 5.958 0 1.89.894 3.574 2.289 4.673-3.057 1.125-5.377 3.604-6.12 6.963-.27 1.221.735 2.364 2.01 2.364h15.892c1.276 0 2.28-1.143 2.01-2.364">
+                      </path>
+                    </g>
+                  </g>
+                </g>
+              </svg> CHIQISH</a></li>
+        </ul>
+      </div>
+
+
+
+
+
+    </div>
+  </nav>
+
+
+  <section class="user-data">
+    <div class="container">
+      <ul class="user-data__list">
+
+        <li class="user-data__item">
+
+          <p class="user__name">Ilyosbek Jurabekov</p>
+
+        </li>
+
+
+
+        <li class="user-data__item">
+          <div class="user-data">
+            <div class="img__wrapper">
+              <img src="images/ava.png" id="profile-pic" class="ava">
+              <label for="input-file" class="change__button"><img class="change__img"
+                  src="images/change-ava.png"></label>
+              <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" class="change">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+
+
+  <section class="card">
+
+    <h2 class="balance-title">Balans - 74$</h2>
+
+    <div class='app' ng-app='wallet-app' ng-cloak='true'>
+      <div class='app_inner'>
+        <aside>
+          <div class='wallet'>
+            <div class='holder' ng-controller='walletController'>
+              <div class='card' ng-click='index(card.id)' ng-repeat='card in cards | orderBy:"id":true'>
+                <div class='card_number'>
+                  <p>{{card.cardNumber}}</p>
+                </div>
+                <div class='card_holder'>
+                  <p>{{card.cardHolder}}</p>
+                  <p>{{card.expiryDate}}</p>
+                </div>
+                <div class='card_icon'>
+                  <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/{{card.type}}.png'>
+                </div>
+              </div>
+            </div>
+            <div class='add_a_card'>
+              <i class='fa fa-plus'></i>
+              <p>Add a card</p>
+            </div>
+          </div>
+        </aside>
+        <main>
+          <div class='list' ng-controller='walletController'>
+            <ul ng-repeat='card in cards' ng-show='card.id == cardIndex'>
+              <div class='card'>
+                <div class='card_number'>
+                  <p>{{card.cardNumber}}</p>
+                </div>
+                <div class='card_holder'>
+                  <p>{{card.cardHolder}}</p>
+                  <p>{{card.expiryDate}}</p>
+                </div>
+                <div class='card_icon'>
+                  <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/{{card.type}}.png'>
+                </div>
+              </div>
+              <div class='transactions'>
+                <table>
+                  <thead>
+                    <th>
+                      Date
+                    </th>
+                    <th>
+                      Merchant
+                    </th>
+                    <th>
+                      Spend
+                    </th>
+                  </thead>
+                  <tr ng-repeat='transaction in card.transactions'>
+                    <td>
+                      {{transaction.date}}
+                    </td>
+                    <td>
+                      {{transaction.merchant}}
+                    </td>
+                    <td>
+                      {{transaction.price | currency:"£"}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </ul>
+          </div>
+          <div class='create'>
+            <form ng-controller='addCardController as card'>
+              <i class='fa fa-times-circle'></i>
+              <input class='number' ng-model='number' placeholder='Enter card number' type='text'>
+              <input class='name' ng-model='name' placeholder='Enter your name' type='text'>
+              <input class='expiry' ng-model='expiry' placeholder='MM / YY' type='text'>
+              <div class='choose_a_card' ng-controller='addCardController'>
+                <img ng-click='choose("mastercard-curved-64px")'
+                  src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/mastercard-curved-64px.png'>
+                <img ng-click='choose("discover-curved-64px")'
+                  src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/discover-curved-64px.png'>
+                <img class='selected' ng-click='choose("visa-curved-64px")'
+                  src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/visa-curved-64px.png'>
+                <div class='card'>
+                  <div class='card_number'>
+                    <p>{{number}}</p>
+                  </div>
+                  <div class='card_holder'>
+                    <p>{{name}}</p>
+                    <p>{{expiry}}</p>
+                  </div>
+                  <div class='card_icon'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217538/{{choice}}.png'>
+                  </div>
+                </div>
+                <input ng-click='addCard(number, name, expiry)' type='submit' value='Add card'>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+
+
+
+
+  </section>
+
+
+
+
+  
+
+
+
+  <script src="js/kabinet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script
+
+</body>
+
+</html>
